@@ -11,12 +11,33 @@
 </head>
 
 <body class="container">
-    <form method="post" action="">
+    <form method="post" action="https://singulars2022.free.beeceptor.com">
 
         <fieldset>
 
             <label for="nombre">Nombre: </label>
-            <input type="text" required maxlength="50" placeholder="Óscar" name="nombre" id="nombre" required>
+            <input type="text" required maxlength="50" placeholder="Kendry" name="nombre" id="nombre" required>
+
+            <label for="edad">Edad: </label>
+            <input type="number" required name="number" min="18" max="99" placeholder="18">
+
+            <label for="DNI">DNI: </label>
+            <input type="text" required name="dni" placeholder="98523697H" pattern="[0-9]{8}[A-Za-z]{1}">
+
+            <label for="ciudad">Ciudad de origen: </label>
+            <input type="text" required name="ciudad" placeholder="Madrid" min="10" max="100">
+
+            <label for="transporte">Transporte: </label>
+            <select name="transpote" required>
+            <option value="a-pie">A pie</option>
+            <option value="transporte-publico">Transporte Público</option>
+            <option value="transporte-privado">Transporte Privado</option>
+        </select>
+
+            <label for="objetivo">Objetivo del Curso: </label>
+            <input type="text" name="objetivo" maxlength="1024">
+            
+            <textarea name="texto" rows="4" cols="40" placeholder="Escriba tres verdades y una mentira"></textarea>
         </fieldset>
 
         <input type="submit" class="submit" id="submit" value="Enviar" />
