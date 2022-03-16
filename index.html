@@ -8,15 +8,34 @@
     <link rel="stylesheet" href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
 
     <title>Formulario básico HTML5</title>
+
+    <style>
+        input:invalid {
+            box-shadow: 2px 2px 2px 1px rgba(255, 0, 0, 0.4);
+        }
+
+        input:valid {
+            box-shadow: 2px 2px 2px 1px rgba(0, 255, 0, 0.4);
+
+        }
+    </style>
+
 </head>
 
 <body class="container">
-    <form method="post" action="https://singulars2022.free.beeceptor.com">
+
+    <form name="presentacion" method="post" action="https://singulars2022.free.beeceptor.com">
 
         <fieldset>
 
             <label for="nombre">Nombre: </label>
-            <input type="text" required maxlength="50" placeholder="Kendry" name="nombre" id="nombre" required>
+            <input type="text" required maxlength="50" placeholder="Daniel" name="nombre" id="nombre" required>
+
+            <label for="email">Email:</label>
+            <input type="email" placeholder="correo@gmail.com" name="email" id="email" required>
+            <p id="mensaje-existe-usuario" style="color:red;display: none">
+                El email <span styke="font-weight: 700" id="usuario-existente"></span> existe en la base de datos
+            </p>
 
             <label for="edad">Edad: </label>
             <input type="number" required name="number" min="18" max="99" placeholder="18">
@@ -35,7 +54,7 @@
         </select>
 
             <label for="objetivo">Objetivo del Curso: </label>
-            <input type="text" name="objetivo" maxlength="1024">
+            <input type="text" name="objetivo" maxlength="1024" required>
             
             <textarea name="texto" rows="4" cols="40" placeholder="Escriba tres verdades y una mentira"></textarea>
         </fieldset>
@@ -43,6 +62,52 @@
         <input type="submit" class="submit" id="submit" value="Enviar" />
 
     </form>
+
+     <!-- Quiero verificar inmediatamente si el correo de registro existe ya en la base datos -->
+
+     <script>
+        let emails = ["pepe@gmail.com", "koke@gmail.com", "pipu@gmail.com"];
+        let dni = document.forms["presentacion"].elements["dni"];
+
+        let email = document.forms["presentacion"].elements["email"];
+        email.addEventListener("blur", function (event) {
+
+            let emailIntroducido = event.target.value;
+
+            let existeUsuario = emails.some(email => email == emailIntroducido);
+
+            if (existeUsuario) {
+                document.querySelector("#mensaje-existe-usuario").style.display = "block";
+                document.querySelector("#usuario-existente").textContent = emailIntroducido;
+                event.target.value = "";
+            }
+
+        })
+
+        email.addEventListener("input", function () {
+            document.querySelector("#mensaje-existe-usuario").style.display = "none";
+        });
+
+        // Quiero cerciorarme que cuando el estado de este control es inválido (porque )
+        dni.addEventListener("invalid", () => {
+            if (dni.validity.patternMismatch) {
+                return dni.setCustomValidity('Un DNI debería componerse de 8 dígitos y una letra')
+            }
+            return dni.setCustomValidity('') // default message
+        });
+
+        document.forms["presentacion"].addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            // aparte de enviarlo al endpoint, quiero tambien enviar informacion a mi Google Drive
+
+            // Y después, envio el formulario al endpoint
+            // event.target.submitForm();
+
+        });
+
+     </script>
+
 </body>
 
 </html>
